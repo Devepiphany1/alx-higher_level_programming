@@ -1,0 +1,6 @@
+#!/usr/bin/env/bash
+# Thi is a bash
+for (( i = 0; i<10; i++))
+do
+	echo "Best chool"
+done
