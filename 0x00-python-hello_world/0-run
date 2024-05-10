@@ -1,3 +1,2 @@
-#!/bin/bash
-# This is a python script
+#!/usr/bin/python3
 gcc -E $CFILE > c
