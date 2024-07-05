@@ -1,22 +1,22 @@
-import requests
+import urllib.request
+import sys
 
 def fetch_request_id(url):
     try:
-        response = requests.get(url)
-        # Check if the request was successful (status code 200)
-        if response.status_code == 200:
-            # Check if 'X-Request-Id' is present in the response headers
-            if 'X-Request-Id' in response.headers:
-                request_id = response.headers['X-Request-Id']
+        with urllib.request.urlopen(url) as response:
+            headers = response.headers
+            if 'X-Request-Id' in headers:
+                request_id = headers['X-Request-Id']
                 print(f"X-Request-Id: {request_id}")
             else:
                 print("X-Request-Id not found in response headers.")
-        else:
-            print(f"Request failed with status code {response.status_code}")
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
+    except urllib.error.URLError as e:
+        print(f"Error fetching URL: {e}")
 
 # Example usage:
 if __name__ == "__main__":
-    url = input("Enter URL: ")
-    fetch_request_id(url)
+    if len(sys.argv) > 1:
+        url = sys.argv[1]
+        fetch_request_id(url)
+    else:
+        print("Usage: python script.py <URL>")
